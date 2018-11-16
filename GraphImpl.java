@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -30,7 +31,7 @@ public class GraphImpl<T> implements GraphADT<T> {
      * Store the vertices and the vertice's adjacent vertices
      */
     private Map<T, List<T>> verticesMap; 
-    
+    private ArrayList<T> recList;
     
     /**
      * Construct and initialize and empty Graph
@@ -96,22 +97,23 @@ public class GraphImpl<T> implements GraphADT<T> {
     }
 
     public List<T> getAdjacentVerticesOf(T vertex) {
-    		//add all of the vertex's predecessors to the adjacent list
-    		ArrayList<T> adjacentVertices = new ArrayList<T>();
-    		for (T otherVertex : verticesMap.get(vertex)) 
-    			adjacentVertices.add(otherVertex);
-        Set<T> vertices = getAllVertices();
-
-        for (T otherVertex: vertices) {
-        		//if vertex is predecessor of otherVertex
-        		if (verticesMap.get(otherVertex).contains(vertex)) {
-        			//and otherVertex isn't in adjacency list
-        			if (!adjacentVertices.contains(otherVertex))
-        				adjacentVertices.add(otherVertex);
-        		}
-        }
-
-        return adjacentVertices;
+    		return verticesMap.get(vertex);
+//    		//add all of the vertex's predecessors to the adjacent list
+//    		ArrayList<T> adjacentVertices = new ArrayList<T>();
+//    		for (T otherVertex : verticesMap.get(vertex)) 
+//    			adjacentVertices.add(otherVertex);
+//        Set<T> vertices = getAllVertices();
+//
+//        for (T otherVertex: vertices) {
+//        		//if vertex is predecessor of otherVertex
+//        		if (verticesMap.get(otherVertex).contains(vertex)) {
+//        			//and otherVertex isn't in adjacency list
+//        			if (!adjacentVertices.contains(otherVertex))
+//        				adjacentVertices.add(otherVertex);
+//        		}
+//        }
+//
+//        return adjacentVertices;
     }
     
     public boolean hasVertex(T vertex) {
@@ -140,16 +142,24 @@ public class GraphImpl<T> implements GraphADT<T> {
     		}
     		return count;
     }
-    
-    private boolean hasCycle(T vertex) {
-    		int order = order();
-    		boolean[] visited = new boolean[order];
-    		for (int i = 0; i < visited.length; i++) {
-    			visited[i] = false;
-    		}
-    		ArrayList<T> queue = new ArrayList<T>();
-    		
-    }
+    //my attempt at the cycle shit
+//    private boolean hasCycle(T vertex) {
+//    		recList = new ArrayList<T>();
+//    		recList.add(vertex);
+//    		
+//    		for (T vert: getAllVertices()) {
+//    			hasCycleHelper(vert);
+//    		}
+//    		
+//    }
+//    private boolean hasCycleHelper(T vertex) {
+//    		for (T prereq : verticesMap.get(vertex)) {
+//    			if (recList.contains(vertex)) {
+//    				return false;
+//    			}
+//    			recList.add(prereq);
+//    		}
+//    }
     
     private int numEdges(T vertex) {
     		return verticesMap.get(vertex).size();
